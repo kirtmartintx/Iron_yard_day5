@@ -1,0 +1,80 @@
+records = [] #initializing an array
+
+
+  open("planet_express_logs").each do |line| # opens file and grabs one line
+    words = [] #initializing an raay for the grabbed line
+    word = "" #setting word to an empty string
+    planex = line.chomp.chars #chomping end of line and divinding it into an array of chaaracters
+    planex.each do |x| #looping through the line one character at an instance
+      if x == "," #separates entries based on commas
+        words << word #pushes word in words array
+        word = "" #resets word to an empty array
+      else
+        word = word + x #adds new character to word
+      end
+    end
+    words << word
+  records << words
+  end
+
+
+#p records
+
+hash_records = []
+records.each do |record|
+    hash_records << {
+      destination: record[0],
+      item: record[1],
+      crates: record[2].to_i,
+      payment: record[3].to_i
+    }
+end
+
+#p hash_records
+
+
+total_payment = 0
+countearth = 0
+countmars = 0
+counturanus = 0
+leelas_deliveries = 0
+
+leelabonus = 0
+leelatrips = 0
+frybonus = 0
+frytrips = 0
+amybonus = 0
+amytrips = 0
+benderbonus = 0
+bendertrips = 0
+
+hash_records.each do |hash|
+  total_payment = total_payment + hash[:payment]
+  if hash[:destination] == "Earth"
+      countearth = countearth + hash[:payment]
+      frybonus = countearth/10
+      frytrips += 1
+  elsif hash[:destination] == "Mars"
+      countmars = countmars + hash[:payment]
+      amytrips += 1
+  elsif hash[:destination] == "Uranus"
+      counturanus = counturanus + hash[:payment]
+      benderbonus = counturanus/10
+      bendertrips += 1
+  else
+    leelas_deliveries = leelas_deliveries + hash[:payment]
+    leelabonus = leelas_deliveries/10
+    leelatrips += 1
+  end
+end
+p "Our take for this week is #{total_payment}."
+p "Payment of #{countearth} from trips to Earth."
+p "Payment of #{countmars} from trips to Mars."
+p "Payment of #{counturanus} from trips to Uranus."
+p "Leelas' bonus is #{leelabonus}."
+p "Frys' bonus is #{frybonus}."
+p "Benders' bonus is #{benderbonus}."
+p "Fry made #{frytrips} trips."
+p "Amy made #{amytrips} trips."
+p "Bender made #{bendertrips} trips."
+p "Leela made #{leelatrips} trips."
